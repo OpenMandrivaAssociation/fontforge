@@ -1,12 +1,12 @@
-%define ffversion	20061220
-%define docversion	20061220
+%define ffversion	20070831
+%define docversion	20070831
 %define	Summary		Font Editor for PostScript, TrueType, OpenType and various fonts
 
 Name:		fontforge
 Version:	1.0
-Release:	%mkrel 0.%{ffversion}.2
+Release:	%mkrel 0.%{ffversion}.1
 Summary:	%{Summary}
-License:	BSD Style
+License:	BSD-like
 Group:		Publishing
 Source0:	http://fontforge.sourceforge.net/fontforge_full-%{ffversion}.tar.bz2
 Source2:	http://fontforge.sourceforge.net/fontforge_htdocs-%{docversion}.tar.bz2
@@ -66,19 +66,6 @@ rm -rf $RPM_BUILD_ROOT
 
 rm -rf $RPM_BUILD_ROOT%{_libdir}
 
-# menu
-mkdir -p $RPM_BUILD_ROOT%{_menudir}
-cat > $RPM_BUILD_ROOT%{_menudir}/%{name} <<EOF
-?package(%{name}): \
-command="%{name}" \
-needs="x11" \
-icon="%{name}.png" \
-section="Office/Publishing" \
-title="FontForge" \
-longtitle="%{Summary}" \
-xdg="true"
-EOF
-
 # XDG compliance
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
@@ -90,13 +77,13 @@ Icon=%{name}
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=X-MandrivaLinux-Office-Publishing;Graphics;Scanning;OCR;Office;Viewer;
+Categories=Graphics;Scanning;OCR;Office;Viewer;
 EOF
 
 # icons
-install -m644 %{SOURCE11} -D $RPM_BUILD_ROOT%{_miconsdir}/%{name}.png
-install -m644 %{SOURCE12} -D $RPM_BUILD_ROOT%{_iconsdir}/%{name}.png
-install -m644 %{SOURCE13} -D $RPM_BUILD_ROOT%{_liconsdir}/%{name}.png
+install -m644 %{SOURCE11} -D $RPM_BUILD_ROOT%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+install -m644 %{SOURCE12} -D $RPM_BUILD_ROOT%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+install -m644 %{SOURCE13} -D $RPM_BUILD_ROOT%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 # added with htdocs in %doc section
 rm -rf %{buildroot}%{_datadir}/doc/fontforge
@@ -107,9 +94,11 @@ chrpath -d %{buildroot}%{_bindir}/%{name}
 
 %post
 %{update_menus}
+%{update_icon_cache hicolor}
 
 %postun
 %{clean_menus}
+%{clean_icon_cache hicolor}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -119,12 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc LICENSE htdocs README-unix README-Unix.html fontforge-tutorial.pdf
 %{_bindir}/*
 %{_mandir}/man1/*
-%{_menudir}/%{name}
-%{_iconsdir}/%{name}.png
-%{_liconsdir}/%{name}.png
-%{_miconsdir}/%{name}.png
+%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 %{_datadir}/applications/mandriva-%{name}.desktop
 %{_datadir}/fontforge
-
-
 
