@@ -31,6 +31,7 @@ BuildRequires:	libxml2-devel
 Requires:	%{mklibname uninameslist 0}
 BuildRequires:	libuninameslist-devel
 BuildRequires:	chrpath
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 FontForge is an outline font editor that lets you create your own 
