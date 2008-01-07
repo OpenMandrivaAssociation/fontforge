@@ -1,5 +1,5 @@
-%define ffversion	20071002
-%define docversion	20071002
+%define ffversion	20071210
+%define docversion	20071211
 %define	Summary		Font Editor for PostScript, TrueType, OpenType and various fonts
 
 Name:		fontforge
