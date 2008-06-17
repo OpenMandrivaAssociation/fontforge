@@ -57,7 +57,7 @@ tar xjf %{SOURCE3} -C cidmap
 	--with-multilayer \
 	--with-devicetables \
 	--disable-shared
-%make
+make
 
 %install
 rm -rf $RPM_BUILD_ROOT
