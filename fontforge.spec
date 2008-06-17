@@ -88,6 +88,8 @@ install -m644 %{SOURCE13} -D $RPM_BUILD_ROOT%{_iconsdir}/hicolor/48x48/apps/%{na
 # added with htdocs in %doc section
 rm -rf %{buildroot}%{_datadir}/doc/fontforge
 
+rm -rf %{buildroot}%{_includedir}
+
 chrpath -d %{buildroot}%{_bindir}/%{name}
 
 %find_lang FontForge
