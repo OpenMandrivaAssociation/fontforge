@@ -1,4 +1,4 @@
-%define ffversion	20071210
+%define ffversion	20080828
 %define docversion	20071211
 %define	Summary		Font Editor for PostScript, TrueType, OpenType and various fonts
 
