@@ -1,5 +1,5 @@
-%define ffversion	20080828
-%define docversion	20071211
+%define ffversion	20090224
+%define docversion	20090224
 %define	Summary		Font Editor for PostScript, TrueType, OpenType and various fonts
 
 Name:		fontforge
@@ -17,6 +17,7 @@ Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
 Patch0:		fontforge-%{version}-uni-nodevel.patch
 Patch1:		fontforge-%{version}-local-helpdir.patch
+Patch2:		fontforge-20090224-fix-str-fmt.patch
 URL:		http://fontforge.sourceforge.net/
 # (Abel) it wants either autotrace or potrace
 Requires:	fonttracer
@@ -43,6 +44,7 @@ format to another. FontForge has support for many macintosh font formats.
 %setup -q -n fontforge-%{ffversion}
 %patch0 -p1 -b .uninames
 %patch1 -p1 -b .helpdir
+%patch2 -p0 -b .str-fmt
 install -m 644 %{SOURCE4} .
 
 # needed by patch
@@ -60,15 +62,14 @@ tar xjf %{SOURCE3} -C cidmap
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
-#%makeinstall_std
+rm -rf %{buildroot}
 %makeinstall
 
-rm -rf $RPM_BUILD_ROOT%{_libdir}
+rm -rf %{buildroot}%{_libdir}
 
 # XDG compliance
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
 Name=FontForge
 Comment=%{Summary}
@@ -81,9 +82,9 @@ Categories=Graphics;Scanning;OCR;Office;Viewer;
 EOF
 
 # icons
-install -m644 %{SOURCE11} -D $RPM_BUILD_ROOT%{_iconsdir}/hicolor/16x16/apps/%{name}.png
-install -m644 %{SOURCE12} -D $RPM_BUILD_ROOT%{_iconsdir}/hicolor/32x32/apps/%{name}.png
-install -m644 %{SOURCE13} -D $RPM_BUILD_ROOT%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+install -m644 %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+install -m644 %{SOURCE12} -D %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+install -m644 %{SOURCE13} -D %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 # added with htdocs in %doc section
 rm -rf %{buildroot}%{_datadir}/doc/fontforge
@@ -107,7 +108,7 @@ chrpath -d %{buildroot}%{_bindir}/%{name}
 %endif
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files -f FontForge.lang
 %defattr(-,root,root)
