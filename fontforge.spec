@@ -1,5 +1,5 @@
-%define ffversion	20090224
-%define docversion	20090224
+%define ffversion	20090408
+%define docversion	20090408
 %define	Summary		Font Editor for PostScript, TrueType, OpenType and various fonts
 
 Name:		fontforge
@@ -18,6 +18,10 @@ Source13:	%{name}-48x48.png
 Patch0:		fontforge-%{version}-uni-nodevel.patch
 Patch1:		fontforge-%{version}-local-helpdir.patch
 Patch2:		fontforge-20090224-fix-str-fmt.patch
+# Patches from Debian
+Patch10:	008_libgif.diff
+Patch11:	024_def_background.diff
+Patch12:	025_bcunlink.diff
 URL:		http://fontforge.sourceforge.net/
 # (Abel) it wants either autotrace or potrace
 Requires:	fonttracer
@@ -45,6 +49,9 @@ format to another. FontForge has support for many macintosh font formats.
 %patch0 -p1 -b .uninames
 %patch1 -p1 -b .helpdir
 %patch2 -p0 -b .str-fmt
+%patch10 -p1 -b .libgif
+%patch11 -p1 -b .background
+%patch12 -p1 -b .segfault
 install -m 644 %{SOURCE4} .
 
 # needed by patch
