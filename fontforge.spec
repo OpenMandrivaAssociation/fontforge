@@ -4,7 +4,7 @@
 
 Name:		fontforge
 Version:	1.0
-Release:	%mkrel 0.%{ffversion}.2
+Release:	%mkrel 0.%{ffversion}.3
 Summary:	%{Summary}
 License:	BSD-like
 Group:		Publishing
