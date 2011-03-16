@@ -4,7 +4,7 @@
 
 Name:		fontforge
 Version:	1.0
-Release:	%mkrel 0.%{ffversion}.3
+Release:	%mkrel 0.%{ffversion}.4
 Summary:	%{Summary}
 License:	BSD-like
 Group:		Publishing
@@ -22,8 +22,7 @@ Patch10:	008_libgif.diff
 Patch11:	024_def_background.diff
 URL:		http://fontforge.sourceforge.net/
 # (Abel) it wants either autotrace or potrace
-Requires:	fonttracer
-Requires:	tetex-mfwin
+Requires:	autotrace
 BuildRequires:	freetype2-devel
 BuildRequires:	jpeg-devel
 BuildRequires:	png-devel
