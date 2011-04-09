@@ -1,10 +1,10 @@
-%define ffversion	20090923
-%define docversion	20090914
+%define ffversion	20110222
+%define docversion	20110221
 %define	Summary		Font Editor for PostScript, TrueType, OpenType and various fonts
 
 Name:		fontforge
 Version:	1.0
-Release:	%mkrel 0.%{ffversion}.5
+Release:	%mkrel 0.%{ffversion}.1
 Summary:	%{Summary}
 License:	BSD-like
 Group:		Publishing
@@ -15,23 +15,27 @@ Source4:	http://fontforge.sourceforge.net/fontforge-tutorial.pdf
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
-Patch0:		fontforge-%{version}-uni-nodevel.patch
-Patch1:		fontforge-%{version}-local-helpdir.patch
-# Patches from Debian
-Patch10:	008_libgif.diff
-Patch11:	024_def_background.diff
+Patch0:		fontforge-20110222-link.patch
+Patch1:         fontforge-20090224-pythondl.patch
+Patch2:         fontforge-20100501-select-points-crash.patch
+Patch3:	        fontforge-20110222-multilib.patch
 URL:		http://fontforge.sourceforge.net/
 # (Abel) it wants either autotrace or potrace
 Requires:	potrace
 BuildRequires:	freetype2-devel
+BuildRequires:	fontconfig-devel
 BuildRequires:	jpeg-devel
 BuildRequires:	png-devel
 BuildRequires:	tiff-devel
 BuildRequires:	libungif-devel
 BuildRequires:	libxml2-devel
-# (Abel) libuninameslist.so.0 is a runtime dependency via dlopen()
-Requires:	%{mklibname uninameslist 0}
 BuildRequires:	libuninameslist-devel
+BuildRequires:	python-devel
+BuildRequires:	libx11-devel
+BuildRequires:	libxi-devel
+BuildRequires:	libxft-devel
+BuildRequires:	pango-devel
+BuildRequires:	cairo-devel
 BuildRequires:	chrpath
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -42,58 +46,45 @@ bitmap (bdf) fonts, or edit existing ones. Also lets you convert one
 format to another. FontForge has support for many macintosh font formats.
 
 %prep
-%setup -q -n fontforge-%{ffversion}
-%patch0 -p1 -b .uninames
-%patch1 -p1 -b .helpdir
-%patch10 -p1 -b .libgif
-%patch11 -p1 -b .background
-install -m 644 %{SOURCE4} .
-
-# needed by patch
-#autoconf
+%setup -qn fontforge-%{ffversion}
+%patch0 -p0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p0
 
 mkdir -p htdocs cidmap
 tar xjf %{SOURCE2} -C htdocs
 tar xjf %{SOURCE3} -C cidmap
 
+cp %{SOURCE4} .
+
 %build
 %configure2_5x \
-	--with-multilayer \
-	--with-devicetables \
-	--disable-shared
-make
+	--disable-static --with-freetype-bytecode=no \
+	--with-regular-link --enable-pyextension \
+	--enable-longdouble --enable-type3 --enable-libff
+%make
 
 %install
 rm -rf %{buildroot}
-%makeinstall
+%makeinstall_std
 
-rm -rf %{buildroot}%{_libdir}
-
-# XDG compliance
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
-[Desktop Entry]
-Name=FontForge
-Comment=%{Summary}
-Exec=%{name} 
-Icon=%{name}
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=Graphics;Scanning;OCR;Office;Viewer;
-EOF
+desktop-file-install \
+  --dir $RPM_BUILD_ROOT%{_datadir}/applications            \
+  Packaging/fontforge.desktop
 
 # icons
 install -m644 %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
 install -m644 %{SOURCE12} -D %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
 install -m644 %{SOURCE13} -D %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
-# added with htdocs in %doc section
-rm -rf %{buildroot}%{_datadir}/doc/fontforge
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mime/packages
 
-rm -rf %{buildroot}%{_includedir}
+install -p Packaging/fontforge.xml $RPM_BUILD_ROOT/%{_datadir}/mime/packages/
 
-chrpath -d %{buildroot}%{_bindir}/%{name}
+rm -rf %{buildroot}%{_includedir} %{buildroot}%{_libdir}/{*.la,*.so,pkgconfig}
+
+chrpath -d %{buildroot}%{_bindir}/%{name} %{buildroot}%{_libdir}/*.so.*
 
 %find_lang FontForge
 
@@ -102,12 +93,14 @@ rm -rf %{buildroot}
 
 %files -f FontForge.lang
 %defattr(-,root,root)
-%doc LICENSE htdocs README-unix README-Unix.html fontforge-tutorial.pdf
+%doc LICENSE README-unix README-Unix.html fontforge-tutorial.pdf
 %{_bindir}/*
 %{_mandir}/man1/*
-%{_iconsdir}/hicolor/16x16/apps/%{name}.png
-%{_iconsdir}/hicolor/32x32/apps/%{name}.png
-%{_iconsdir}/hicolor/48x48/apps/%{name}.png
-%{_datadir}/applications/mandriva-%{name}.desktop
+%{_iconsdir}/hicolor/*/apps/%{name}.png
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/mime/packages/fontforge.xml
+%{python_sitearch}/fontforge*.egg-info
+%{python_sitearch}/fontforge.so
+%{python_sitearch}/psMat.so
+%{_libdir}/*.so.*
 %{_datadir}/fontforge
-
