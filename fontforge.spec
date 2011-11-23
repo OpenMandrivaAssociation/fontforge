@@ -2,6 +2,9 @@
 %define docversion	20110221
 %define	Summary		Font Editor for PostScript, TrueType, OpenType and various fonts
 
+%define		_disable_ld_no_undefined	1
+%define		_disable_ld_as_needed		1
+
 Name:		fontforge
 Version:	1.0
 Release:	%mkrel 0.%{ffversion}.2
@@ -19,6 +22,7 @@ Patch0:		fontforge-20110222-link.patch
 Patch1:         fontforge-20090224-pythondl.patch
 Patch2:         fontforge-20100501-select-points-crash.patch
 Patch3:	        fontforge-20110222-multilib.patch
+Patch4:		fontforge-20110222-png1.5.patch
 URL:		http://fontforge.sourceforge.net/
 # (Abel) it wants either autotrace or potrace
 Requires:	potrace
@@ -52,6 +56,7 @@ format to another. FontForge has support for many macintosh font formats.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p0
+%patch4 -p1
 
 mkdir -p htdocs cidmap
 tar xjf %{SOURCE2} -C htdocs
