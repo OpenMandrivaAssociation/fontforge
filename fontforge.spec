@@ -76,7 +76,7 @@ rm -rf %{buildroot}
 %makeinstall_std
 
 desktop-file-install \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications            \
+  --dir %{buildroot}%{_datadir}/applications            \
   Packaging/fontforge.desktop
 
 # icons
@@ -84,9 +84,9 @@ install -m644 %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}
 install -m644 %{SOURCE12} -D %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
 install -m644 %{SOURCE13} -D %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mime/packages
+mkdir -p %{buildroot}/%{_datadir}/mime/packages
 
-install -p Packaging/fontforge.xml $RPM_BUILD_ROOT/%{_datadir}/mime/packages/
+install -p Packaging/fontforge.xml %{buildroot}/%{_datadir}/mime/packages/
 
 rm -rf %{buildroot}%{_includedir} %{buildroot}%{_libdir}/{*.la,*.so,pkgconfig}
 
