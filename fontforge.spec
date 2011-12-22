@@ -41,6 +41,7 @@ BuildRequires:	libxft-devel
 BuildRequires:	pango-devel
 BuildRequires:	cairo-devel
 BuildRequires:	desktop-file-utils
+BuildRequires:	pkgconfig(pangoxft)
 BuildRequires:	chrpath
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
