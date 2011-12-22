@@ -33,23 +33,25 @@ Patch1:		fontforge-20090224-pythondl.patch
 Patch2:		fontforge-20100501-select-points-crash.patch
 Patch3:		fontforge-20110222-multilib.patch
 Patch4:		fontforge-20110222-png1.5.patch
-BuildRequires:	freetype2-devel
-BuildRequires:	fontconfig-devel
-BuildRequires:	jpeg-devel
-BuildRequires:	png-devel
-BuildRequires:	tiff-devel
-BuildRequires:	libungif-devel
-BuildRequires:	libxml2-devel
-BuildRequires:	libuninameslist-devel
-BuildRequires:	python-devel
-BuildRequires:	libx11-devel
-BuildRequires:	libxi-devel
-BuildRequires:	libxft-devel
-BuildRequires:	pango-devel
-BuildRequires:	cairo-devel
-BuildRequires:	desktop-file-utils
-BuildRequires:	pkgconfig(pangoxft)
+
 BuildRequires:	chrpath
+BuildRequires:	desktop-file-utils
+BuildRequires:	jpeg-devel
+BuildRequires:	libungif-devel
+BuildRequires:	libuninameslist-devel
+BuildRequires:	tiff-devel
+BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(fontconfig)
+BuildRequires:	pkgconfig(libpng15)
+BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	python-devel
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xi)
+BuildRequires:	pkgconfig(xft)
+BuildRequires:	pkgconfig(cairo)
+BuildRequires:	pkgconfig(pango)
+BuildRequires:	pkgconfig(pangocairo)
+BuildRequires:	pkgconfig(pangoxft)
 
 # (Abel) it wants either autotrace or potrace
 Requires:	potrace
@@ -185,19 +187,19 @@ chrpath -d %{buildroot}%{_bindir}/%{name} %{buildroot}%{_libdir}/*.so.*
 %{python_sitearch}/psMat.so
 
 %files -n %{libname}
-%{_libdir}/libfontforge.so.%{major}
+%{_libdir}/libfontforge.so.%{major}*
 
 %files -n %{libgdraw}
-%{_libdir}/libgdraw.so.%{gdraw_major}
+%{_libdir}/libgdraw.so.%{gdraw_major}*
 
 %files -n %{libgioftp}
-%{_libdir}/libgioftp.so.%{major}
+%{_libdir}/libgioftp.so.%{major}*
 
 %files -n %{libgunicode}
-%{_libdir}/libgunicode.so.%{gunicode_major}
+%{_libdir}/libgunicode.so.%{gunicode_major}*
 
 %files -n %{libgutils}
-%{_libdir}/libgutils.so.%{major}
+%{_libdir}/libgutils.so.%{major}*
 
 %files -n %{develname}
 %{_libdir}/lib*.so
