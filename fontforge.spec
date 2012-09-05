@@ -1,5 +1,6 @@
-%define ffversion	20110222
-%define docversion	20110221
+%define ffversion	20120731-b
+%define docversion	20120731-b
+%define uprel		20120731b
 
 %define major 1
 %define gdraw_major 4
@@ -11,12 +12,9 @@
 %define libgutils %mklibname gutils %{major}
 %define develname %mklibname %{name} -d
 
-%define		_disable_ld_no_undefined	1
-%define		_disable_ld_as_needed		1
-
 Name:		fontforge
 Version:	1.0
-Release:	0.%{ffversion}.4
+Release:	0.%{uprel}.1
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 License:	BSD-like
 Group:		Publishing
@@ -28,16 +26,14 @@ Source4:	http://fontforge.sourceforge.net/fontforge-tutorial.pdf
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
-Patch0:		fontforge-20110222-link.patch
+Patch0:		fontforge-20120731-link.patch
 Patch1:		fontforge-20090224-pythondl.patch
-Patch2:		fontforge-20100501-select-points-crash.patch
-Patch3:		fontforge-20110222-multilib.patch
 Patch4:		fontforge-20110222-png1.5.patch
 
 BuildRequires:	chrpath
 BuildRequires:	desktop-file-utils
 BuildRequires:	jpeg-devel
-BuildRequires:	libungif-devel
+BuildRequires:	ungif-devel
 BuildRequires:	libuninameslist-devel
 BuildRequires:	tiff-devel
 BuildRequires:	pkgconfig(freetype2)
@@ -129,9 +125,7 @@ use %{name}.
 %setup -qn fontforge-%{ffversion}
 %patch0 -p0
 %patch1 -p1
-%patch2 -p1
-%patch3 -p0
-%patch4 -p1
+#patch4 -p1
 
 mkdir -p htdocs cidmap
 tar xjf %{SOURCE2} -C htdocs
