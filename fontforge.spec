@@ -38,7 +38,7 @@ BuildRequires:	libuninameslist-devel
 BuildRequires:	tiff-devel
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
-BuildRequires:	pkgconfig(libpng15)
+BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	python-devel
 BuildRequires:	pkgconfig(x11)
