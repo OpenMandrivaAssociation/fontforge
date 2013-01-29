@@ -11,8 +11,8 @@
 %define libgutils %mklibname gutils %{major}
 %define develname %mklibname %{name} -d
 
-%define		_disable_ld_no_undefined	1
-%define		_disable_ld_as_needed		1
+#define		_disable_ld_no_undefined	1
+#define		_disable_ld_as_needed		1
 
 Name:		fontforge
 Version:	1.0
@@ -30,7 +30,8 @@ Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
 Patch0:		fontforge-20110222-link.patch
 Patch1:		fontforge-20090224-pythondl.patch
-Patch4:		fontforge-20110222-png1.5.patch
+Patch4:		libpng15-dynamic.diff
+Patch5:		fontforge-20110222-libz.so-linkage.patch
 
 BuildRequires:	chrpath
 BuildRequires:	desktop-file-utils
@@ -127,13 +128,18 @@ use %{name}.
 %setup -qn fontforge-%{ffversion}
 %patch0 -p0
 %patch1 -p1
-#% patch4 -p1
+#patch4 -p0
+%patch5 -p1
 
 mkdir -p htdocs cidmap
 tar xjf %{SOURCE2} -C htdocs
 tar xjf %{SOURCE3} -C cidmap
 
 cp %{SOURCE4} .
+
+# Fix bad line terminators
+%{__sed} -i 's/\r//' htdocs/Big5.txt
+%{__sed} -i 's/\r//' htdocs/corpchar.txt
 
 %build
 %configure2_5x \
@@ -144,6 +150,10 @@ cp %{SOURCE4} .
 	--enable-longdouble \
 	--enable-type3 \
 	--enable-libff
+
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
 %make
 
 %install
