@@ -1,0 +1,42 @@
+--- gutils/gimagereadpng.c.old	2011-05-16 13:11:25.000000000 +0200
++++ gutils/gimagereadpng.c	2011-05-16 13:19:32.000000000 +0200
+@@ -88,6 +88,7 @@ static int loadpng() {
+ return( 0 );
+     }
+ 
++#if 0
+ #  if !defined(PNG_LIBPNG_VER_MAJOR) || (PNG_LIBPNG_VER_MAJOR==1 && PNG_LIBPNG_VER_MINOR<2)
+ /* Early versions are called libpng. Later libpng10/libpng12/libpng14... */
+     libpng = dlopen("libpng" SO_EXT,RTLD_LAZY);
+@@ -112,6 +113,9 @@ return( 0 );
+ #    endif
+     }
+ #  endif
++#endif
++    libpng = dlopen("libpng15.so.15", RTLD_LAZY);
++
+     if ( libpng==NULL ) {
+ 	fprintf(stderr,"libpng: %s\n", dlerror());
+ return( 0 );
+pgajdos@laura:~/branch/devel/fontforge/fontforge-20110222/gutils> diff -up gimagewritepng.c{.old,}
+--- gutils/gimagewritepng.c.old	2011-05-16 13:20:47.000000000 +0200
++++ gutils/gimagewritepng.c	2011-05-16 13:21:44.000000000 +0200
+@@ -72,6 +72,7 @@ static int loadpng() {
+ 	fprintf(stderr,"%s\n", dlerror());
+ return( 0 );
+     }
++#if 0
+ #  if !defined(PNG_LIBPNG_VER_MAJOR) || (PNG_LIBPNG_VER_MAJOR==1 && PNG_LIBPNG_VER_MINOR<2)
+ /* Early versions are called libpng. Later libpng10/libpng12/libpng14... */
+     libpng = dlopen("libpng" SO_EXT,RTLD_LAZY);
+@@ -96,6 +97,9 @@ return( 0 );
+ #    endif
+     }
+ #  endif
++#endif
++    libpng = dlopen("libpng15.so.15", RTLD_LAZY);
++
+     if ( libpng==NULL ) {
+ 	fprintf(stderr,"%s", dlerror());
+ return( 0 );
+
