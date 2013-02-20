@@ -27,7 +27,7 @@
      $(X_PRE_LIBS) $(X_11LIB) $(X_EXTRA_LIBS) @LIBS@ $(STATIC_LIBS) -lm
  LIBLIBS = -rpath $(libdir) ../libgutils.la ../libgunicode.la \
 -    @LIBS@ $(STATIC_LIBS) -lm
-+    @LIBS@ $(STATIC_LIBS) -lm -lpng15 `python-config --libs`
++    @LIBS@ $(STATIC_LIBS) -lm -lpng15 -lz `python-config --libs`
  DLIBS = -rpath $(libdir)  ../libfontforge.la ../libgutils.la ../libgunicode.la @LIBS@ $(STATIC_LIBS) -lm
  
  all: @FINAL_TARGET@ @MACAPP@ sfddiff fontimage fontlint
