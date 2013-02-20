@@ -1,5 +1,5 @@
-%define ffversion	20120731
-%define docversion	20120731
+%define ffversion	20120731-b
+%define docversion	20120731-b
 
 %define major 1
 %define gdraw_major 4
@@ -16,7 +16,7 @@
 
 Name:		fontforge
 Version:	1.0
-Release:	0.%{ffversion}.4
+Release:	0.20120731b.5
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 License:	BSD-like
 Group:		Publishing
@@ -154,7 +154,7 @@ cp %{SOURCE4} .
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-%make
+%make 
 
 %install
 %makeinstall_std
