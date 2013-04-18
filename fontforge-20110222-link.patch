@@ -1,5 +1,5 @@
---- gdraw/Makefile.dynamic.in.link	2011-04-09 11:32:10.000000000 +0200
-+++ gdraw/Makefile.dynamic.in	2011-04-09 11:32:18.000000000 +0200
+--- ./gdraw/Makefile.dynamic.in.link	2011-04-09 11:32:10.000000000 +0200
++++ ./gdraw/Makefile.dynamic.in	2011-04-09 11:32:18.000000000 +0200
 @@ -20,7 +20,7 @@
  X_11LIB = @X_11LIB@
  X_EXTRA_LIBS = @X_EXTRA_LIBS@
@@ -9,8 +9,8 @@
  
  libgdraw_OBJECTS =  choosericons.lo ctlvalues.lo drawboxborder.lo \
   gaskdlg.lo gbuttons.lo gcolor.lo gchardlg.lo gcontainer.lo gdraw.lo \
---- gutils/Makefile.dynamic.in.link	2011-04-09 11:31:51.000000000 +0200
-+++ gutils/Makefile.dynamic.in	2011-04-09 11:32:00.000000000 +0200
+--- ./gutils/Makefile.dynamic.in.link	2011-04-09 11:31:51.000000000 +0200
++++ ./gutils/Makefile.dynamic.in	2011-04-09 11:32:00.000000000 +0200
 @@ -19,7 +19,7 @@
  LIBTOOL = @LIBTOOL@
  CC = @CC@
@@ -20,8 +20,8 @@
  
  libgutils_OBJECTS = divisors.lo fsys.lo gcol.lo gimage.lo gimagereadbmp.lo \
   gimageread.lo gimagereadgif.lo gimagereadjpeg.lo gimagereadpng.lo \
---- fontforge/Makefile.dynamic.in.link	2011-04-09 11:37:56.000000000 +0200
-+++ fontforge/Makefile.dynamic.in	2011-04-09 11:44:51.000000000 +0200
+--- ./fontforge/Makefile.dynamic.in.link	2011-04-09 11:37:56.000000000 +0200
++++ ./fontforge/Makefile.dynamic.in	2011-04-09 11:44:51.000000000 +0200
 @@ -72,7 +72,7 @@
      ../libgunicode.la \
      $(X_PRE_LIBS) $(X_11LIB) $(X_EXTRA_LIBS) @LIBS@ $(STATIC_LIBS) -lm
@@ -31,8 +31,8 @@
  DLIBS = -rpath $(libdir)  ../libfontforge.la ../libgutils.la ../libgunicode.la @LIBS@ $(STATIC_LIBS) -lm
  
  all: @FINAL_TARGET@ @MACAPP@ sfddiff fontimage fontlint
---- pyhook/setup.py.in.link	2011-02-15 04:37:41.000000000 +0100
-+++ pyhook/setup.py.in	2011-04-09 12:01:11.000000000 +0200
+--- ./pyhook/setup.py.in.link	2011-02-15 04:37:41.000000000 +0100
++++ ./pyhook/setup.py.in	2011-04-09 12:01:11.000000000 +0200
 @@ -12,11 +12,11 @@
          ext_modules=[Extension('fontforge',['fontforgepyhook.c'],
                  include_dirs=[@PYINCLUDE@],
