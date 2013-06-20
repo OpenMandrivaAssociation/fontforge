@@ -37,7 +37,7 @@ BuildRequires:	libuninameslist-devel
 BuildRequires:	tiff-devel
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
-BuildRequires:	pkgconfig(libpng15)
+BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	python-devel
 BuildRequires:	pkgconfig(x11)
@@ -133,6 +133,8 @@ cp %{SOURCE4} .
 # Fix bad line terminators
 sed -i 's/\r//' htdocs/Big5.txt
 sed -i 's/\r//' htdocs/corpchar.txt
+
+find . -name "Make*" -o -name "config*" |xargs sed -i -e 's,png15,png16,g;s,PNG15,PNG16,g'
 
 %build
 %configure2_5x \
