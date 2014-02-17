@@ -13,7 +13,7 @@
 
 Name:		fontforge
 Version:	1.0
-Release:	0.20120731b.5
+Release:	0.20120731b.6
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 License:	BSD-like
 Group:		Publishing
@@ -114,7 +114,7 @@ This package contains the development files for %{name}.
 Group:		Development/Python
 Summary:	Library bindings for python
 Conflicts:	%{name} < 1.0-0.20110222.4
-%py_requires -d
+BuildRequires:	python-devel
 
 %description python
 This package contains the python library for python applications that
