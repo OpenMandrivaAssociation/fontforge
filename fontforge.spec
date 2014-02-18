@@ -39,7 +39,7 @@ BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	python-devel
+BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xft)
