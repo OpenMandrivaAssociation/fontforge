@@ -11,10 +11,10 @@
 %define libgutils %mklibname gutils %{major}
 %define devname %mklibname %{name} -d
 
+Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
 Version:	1.0
-Release:	0.20120731b.6
-Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
+Release:	0.20120731b.7
 License:	BSD-like
 Group:		Publishing
 Url:		http://fontforge.sourceforge.net/
@@ -27,6 +27,7 @@ Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
 Patch0:		fontforge-20110222-link.patch
 Patch1:		fontforge-20090224-pythondl.patch
+Patch2:		fontforge-20120731-b-giflib51.patch
 Patch5:		fontforge-20110222-libz.so-linkage.patch
 
 BuildRequires:	chrpath
