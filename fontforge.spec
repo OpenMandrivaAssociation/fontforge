@@ -27,6 +27,7 @@ Source13:	%{name}-48x48.png
 Patch1:		fontforge-20140813-use-system-uthash.patch
 
 BuildRequires:	chrpath
+BuildRequires:	git
 BuildRequires:	desktop-file-utils
 BuildRequires:	jpeg-devel
 BuildRequires:	ungif-devel
