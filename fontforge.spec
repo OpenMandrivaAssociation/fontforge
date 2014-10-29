@@ -31,6 +31,7 @@ BuildRequires:	git
 BuildRequires:	desktop-file-utils
 BuildRequires:	jpeg-devel
 BuildRequires:	ungif-devel
+BuildRequires:	libtool-devel
 BuildRequires:	libuninameslist-devel
 BuildRequires:	tiff-devel
 BuildRequires:	uthash-devel
