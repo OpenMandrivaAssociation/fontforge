@@ -1,11 +1,13 @@
 removed_sources:
   fontforge_full-20110222.tar.bz2: 8fada07647f102351bb1d7d1c4da487356e7142f
   fontforge_htdocs-20110221.tar.bz2: e966fea60a2f7f022af71669f67e15e258948e0e
-sources:
-  cidmaps.tar.bz2: 2385cbc085caee3c710cf0b29d39f6e44a398857
-  fontforge-16x16.png: 3b6eedd7ab9432b118db38c02916acea90325a0c
-  fontforge-32x32.png: 008bf7b3ca9d2a6111b908cc8bd5f969eff2ccf4
-  fontforge-48x48.png: b7900a997b8c6515cbc7071f8edaadc71b4fab02
   fontforge-tutorial.pdf: af9b8876fe276b34a584d04638a6c0ed5e0526a7
   fontforge_full-20120731-b.tar.bz2: b520f532b48e557c177dffa29120225066cc4e84
   fontforge_htdocs-20120731-b.tar.bz2: 1bb2ed6f3760279415db9059f0eadeed4675047c
+  cidmaps.tar.bz2: 2385cbc085caee3c710cf0b29d39f6e44a398857
+sources:
+  20141014.tar.gz: 41e3d0116cf5b81f42c6476a5ce4c89079b63441
+  fontforge-16x16.png: 3b6eedd7ab9432b118db38c02916acea90325a0c
+  fontforge-32x32.png: 008bf7b3ca9d2a6111b908cc8bd5f969eff2ccf4
+  fontforge-48x48.png: b7900a997b8c6515cbc7071f8edaadc71b4fab02
+  gnulib-2bf7326.tar.gz: 2bf08fda2639315a43c5d67bfed60de8bee10f36
