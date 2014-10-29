@@ -190,7 +190,6 @@ chrpath -d %{buildroot}%{_bindir}/%{name} %{buildroot}%{_libdir}/*.so.*
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_iconsdir}/hicolor/*/apps/%{name}.png
-%{_iconsdir}/hicolor/*/apps/%{name}.svg
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/fontforge.xml
 %{_datadir}/%{name}
