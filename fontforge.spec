@@ -9,6 +9,7 @@
 %define libexe %mklibname %{name}exe %{major}
 %define devname %mklibname %{name} -d
 %define gnulib_githead 2bf7326
+%define _disable_rebuild_configure 1
 
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
