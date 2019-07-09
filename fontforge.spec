@@ -14,7 +14,7 @@
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
 Version:	20170731
-Release:	2
+Release:	3
 License:	BSD-like
 Group:		Publishing
 Url:		http://fontforge.sourceforge.net/
@@ -147,8 +147,8 @@ sed -i 's/\r//' htdocs/corpchar.txt
 
 
 %build
-export CC=gcc
-export CXX=g++
+#export CC=gcc
+#export CXX=g++
 ./bootstrap --skip-git --gnulib-srcdir=gnulib-%{gnulib_githead}
 %configure \
 	--disable-static \
@@ -162,10 +162,10 @@ export CXX=g++
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-%make 
+%make_build 
 
 %install
-%makeinstall_std
+%make_install
 
 desktop-file-install \
 	--dir %{buildroot}%{_datadir}/applications \
