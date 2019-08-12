@@ -1,9 +1,8 @@
-%define major 2
-%define gdraw_major 5
-%define gunicode_major 4
+%define major 3
+%define gdraw_major 6
+%define gunicode_major 5
 %define libname %mklibname %{name} %{major}
 %define libgdraw %mklibname gdraw %{gdraw_major}
-%define libgioftp %mklibname gioftp %{major}
 %define libgunicode %mklibname gunicode %{gunicode_major}
 %define libgutils %mklibname gutils %{major}
 %define libexe %mklibname %{name}exe %{major}
@@ -13,8 +12,8 @@
 
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
-Version:	20170731
-Release:	3
+Version:	20190801
+Release:	1
 License:	BSD-like
 Group:		Publishing
 Url:		http://fontforge.sourceforge.net/
@@ -26,7 +25,6 @@ Source1:	gnulib-%{gnulib_githead}.tar.gz
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
-Patch1:		fontforge-20140813-use-system-uthash.patch
 
 BuildRequires:	chrpath
 BuildRequires:	git
@@ -84,14 +82,6 @@ Conflicts:	%{name} < 1.0-0.20110222.4
 %description -n %{libgdraw}
 This package contains the shared library libgdraw.
 
-%package -n %{libgioftp}
-Group:		System/Libraries
-Summary:	Library for %{name}
-Conflicts:	%{name} < 1.0-0.20110222.4
-
-%description -n %{libgioftp}
-This package contains the shared library libgioftp.
-
 %package -n %{libgunicode}
 Group:		System/Libraries
 Summary:	Library for %{name}
@@ -114,7 +104,6 @@ Summary:	Development files for %{name}
 Requires:	%{libname} = %{version}-%{release}
 Requires:	%{libexe} = %{version}-%{release}
 Requires:	%{libgdraw} = %{version}-%{release}
-Requires:	%{libgioftp} = %{version}-%{release}
 Requires:	%{libgunicode} = %{version}-%{release}
 Requires:	%{libgutils} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
@@ -169,7 +158,7 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
 desktop-file-install \
 	--dir %{buildroot}%{_datadir}/applications \
-	desktop/fontforge.desktop
+	desktop/org.fontforge.FontForge.desktop
 
 # The fontforge makefiles install htdocs as well, but we
 # prefer to have them under the standard RPM location, so
@@ -190,13 +179,16 @@ chrpath -d %{buildroot}%{_bindir}/%{name} %{buildroot}%{_libdir}/*.so.*
 %find_lang FontForge
 
 %files -f FontForge.lang
-%doc LICENSE doc/README-unix doc/README-Unix.html doc/html/fontforge-tutorial.pdf
+%doc LICENSE doc/html/fontforge-tutorial.pdf
 %{_bindir}/*
 %{_mandir}/man1/*
-%{_iconsdir}/hicolor/*/apps/%{name}.png
-%optional %{_iconsdir}/hicolor/*/apps/%{name}.svg
-%{_datadir}/applications/%{name}.desktop
+%{_iconsdir}/hicolor/*/apps/*.png
+%optional %{_iconsdir}/hicolor/*/apps/*.svg
+%{_datadir}/applications/*.desktop
 %{_datadir}/mime/packages/fontforge.xml
+%{_datadir}/appdata/org.fontforge.FontForge.appdata.xml
+%{_datadir}/metainfo/org.fontforge.FontForge.*.xml
+%{_datadir}/pixmaps/org.fontforge.FontForge.*
 %{_datadir}/%{name}
 
 %files python
@@ -212,9 +204,6 @@ chrpath -d %{buildroot}%{_bindir}/%{name} %{buildroot}%{_libdir}/*.so.*
 %files -n %{libgdraw}
 %{_libdir}/libgdraw.so.%{gdraw_major}*
 
-%files -n %{libgioftp}
-%{_libdir}/libgioftp.so.%{major}*
-
 %files -n %{libgunicode}
 %{_libdir}/libgunicode.so.%{gunicode_major}*
 
@@ -225,4 +214,3 @@ chrpath -d %{buildroot}%{_bindir}/%{name} %{buildroot}%{_libdir}/*.so.*
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig
 %{_includedir}/%{name}
-
