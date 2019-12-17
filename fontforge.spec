@@ -136,10 +136,8 @@ sed -i 's/\r//' htdocs/corpchar.txt
 
 
 %build
-#export CC=gcc
-#export CXX=g++
 ./bootstrap --skip-git --gnulib-srcdir=gnulib-%{gnulib_githead}
-%configure \
+%configure PYTHON=python3 PYTHON_LIBS="$(python%{python3_version}-config --libs --embed)" \
 	--disable-static \
 	--with-freetype-bytecode=no \
 	--with-regular-link \
