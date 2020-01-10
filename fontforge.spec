@@ -125,7 +125,7 @@ use %{name}.
 %setup -qn fontforge-%{version}
 tar xzf %{SOURCE1}
 
-%apply_patches
+%autopatch -p1
 
 mkdir htdocs
 cp -pr doc/html/* htdocs
