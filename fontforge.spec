@@ -1,30 +1,17 @@
-%define major 3
-%define gdraw_major 6
-%define gunicode_major 5
-%define libname %mklibname %{name} %{major}
-%define libgdraw %mklibname gdraw %{gdraw_major}
-%define libgunicode %mklibname gunicode %{gunicode_major}
-%define libgutils %mklibname gutils %{major}
-%define libexe %mklibname %{name}exe %{major}
-%define devname %mklibname %{name} -d
-%define gnulib_githead 2bf7326
-%define _disable_rebuild_configure 1
-
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
-Version:	20190801
-Release:	2
+Version:	20200314
+Release:	1
 License:	BSD-like
 Group:		Publishing
 Url:		http://fontforge.sourceforge.net/
 # For current version, check https://github.com/fontforge/fontforge/releases
 Source0:	http://github.com/fontforge/fontforge/archive/%{version}.tar.gz
-# https://github.com/fontforge/fontforge/issues/1725
-# http://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=snapshot;h=%{gnulib_githead};sf=tgz;name=gnulib-%{gnulib_githead}.tar.gz
-Source1:	gnulib-%{gnulib_githead}.tar.gz
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
+# Fix build
+Patch0:		https://github.com/fontforge/fontforge/commit/43e6087ec9bdbb23b8bb61c07efe6490fab23d73.patch
 
 BuildRequires:	chrpath
 BuildRequires:	git
@@ -35,6 +22,7 @@ BuildRequires:	libtool-devel
 BuildRequires:	libuninameslist-devel
 BuildRequires:	tiff-devel
 BuildRequires:	uthash-devel
+BuildRequires:	cmake ninja
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(libpng)
@@ -47,6 +35,23 @@ BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(pango)
 BuildRequires:	pkgconfig(pangocairo)
 BuildRequires:	pkgconfig(pangoxft)
+BuildRequires:	pkgconfig(libjpeg)
+BuildRequires:	pkgconfig(readline)
+BuildRequires:	pkgconfig(libtiff-4)
+BuildRequires:	pkgconfig(libwoff2enc)
+BuildRequires:	pkgconfig(libwoff2dec)
+BuildRequires:	pkgconfig(libspiro)
+BuildRequires:	giflib-devel
+# The various libraries were never used by anything outside of fontforge itself,
+# and "ninja install" doesn't install their headers, so they're useless...
+%define libgdraw %mklibname gdraw 6
+%define libgunicode %mklibname gunicode 5
+%define libexe %mklibname %{name}exe 3
+%define libgutils %mklibname gutils 3
+%define libfontforge %mklibname fontforge 3
+%define devname %mklibname %{name} -d 
+Obsoletes:	%{libexe} %{libgdraw} %{libgunicode} %{libgutils} %{libfontforge}
+Obsoletes:	%{devname}
 
 # (Abel) it wants either autotrace or potrace
 Requires:	potrace
@@ -56,60 +61,6 @@ FontForge is an outline font editor that lets you create your own
 postscript, truetype, opentype, cid-keyed, multi-master, cff, svg and 
 bitmap (bdf) fonts, or edit existing ones. Also lets you convert one
 format to another. FontForge has support for many macintosh font formats.
-
-%package -n %{libname}
-Group:		System/Libraries
-Summary:	Library for %{name}
-Conflicts:	%{name} < 1.0-0.20110222.4
-
-%description -n %{libname}
-This package contains the shared library libfontforge.
-
-%package -n %{libexe}
-Group:          System/Libraries
-Summary:        Library for %{name}
-Conflicts:      %{name} < 1.0-0.20110222.4
-
-%description -n %{libexe}
-This package contains the shared library libfontforgeexe.
-
-
-%package -n %{libgdraw}
-Group:		System/Libraries
-Summary:	Library for %{name}
-Conflicts:	%{name} < 1.0-0.20110222.4
-
-%description -n %{libgdraw}
-This package contains the shared library libgdraw.
-
-%package -n %{libgunicode}
-Group:		System/Libraries
-Summary:	Library for %{name}
-Conflicts:	%{name} < 1.0-0.20110222.4
-
-%description -n %{libgunicode}
-This package contains the shared library libgunicode.
-
-%package -n %{libgutils}
-Group:		System/Libraries
-Summary:	Library for %{name}
-Conflicts:	%{name} < 1.0-0.20110222.4
-
-%description -n %{libgutils}
-This package contains the shared library libgutils.
-
-%package -n %{devname}
-Group:		Development/C
-Summary:	Development files for %{name}
-Requires:	%{libname} = %{version}-%{release}
-Requires:	%{libexe} = %{version}-%{release}
-Requires:	%{libgdraw} = %{version}-%{release}
-Requires:	%{libgunicode} = %{version}-%{release}
-Requires:	%{libgutils} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
-
-%description -n %{devname}
-This package contains the development files for %{name}.
 
 %package python
 Group:		Development/Python
@@ -122,46 +73,29 @@ This package contains the python library for python applications that
 use %{name}.
 
 %prep
-%setup -qn fontforge-%{version}
-tar xzf %{SOURCE1}
+%autosetup -p1
 
-%autopatch -p1
-
-mkdir htdocs
-cp -pr doc/html/* htdocs
-chmod 644 htdocs/nonBMP/index.html
-# Fix bad line terminators
-sed -i 's/\r//' htdocs/Big5.txt
-sed -i 's/\r//' htdocs/corpchar.txt
-
+# FIXME switch to ENABLE_DOCS at some point, when
+# they actually compile with current sphinx
+%cmake -G Ninja \
+	-DENABLE_DOCS:BOOL=OFF \
+	-DENABLE_FONTFORGE_EXTRAS:BOOL=ON \
+	-DENABLE_LIBSPIRO:BOOL=ON \
+	-DENABLE_PYTHON_EXTENSION:BOOL=ON \
+	-DENABLE_TILE_PATH:BOOL=ON \
+	-DENABLE_WOFF2:BOOL=ON \
+	-DENABLE_WRITE_PFM:BOOL=ON \
+	-DENABLE_X11:BOOL=ON
 
 %build
-./bootstrap --skip-git --gnulib-srcdir=gnulib-%{gnulib_githead}
-%configure PYTHON=python3 PYTHON_LIBS="$(python%{python3_version}-config --libs --embed)" \
-	--disable-static \
-	--with-freetype-bytecode=no \
-	--with-regular-link \
-	--enable-pyextension \
-	--enable-longdouble \
-	--enable-type3 \
-	--enable-libff
-
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-
-%make_build 
+%ninja_build -C build
 
 %install
-%make_install
+%ninja_install -C build
 
 desktop-file-install \
 	--dir %{buildroot}%{_datadir}/applications \
 	desktop/org.fontforge.FontForge.desktop
-
-# The fontforge makefiles install htdocs as well, but we
-# prefer to have them under the standard RPM location, so
-# remove the extra copy
-rm -rf %{buildroot}%{_datadir}/doc/fontforge
 
 # icons
 install -m644 %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
@@ -177,38 +111,17 @@ chrpath -d %{buildroot}%{_bindir}/%{name} %{buildroot}%{_libdir}/*.so.*
 %find_lang FontForge
 
 %files -f FontForge.lang
-%doc LICENSE doc/html/fontforge-tutorial.pdf
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_iconsdir}/hicolor/*/apps/*.png
 %optional %{_iconsdir}/hicolor/*/apps/*.svg
 %{_datadir}/applications/*.desktop
 %{_datadir}/mime/packages/fontforge.xml
-%{_datadir}/appdata/org.fontforge.FontForge.appdata.xml
 %{_datadir}/metainfo/org.fontforge.FontForge.*.xml
 %{_datadir}/pixmaps/org.fontforge.FontForge.*
 %{_datadir}/%{name}
+%{_libdir}/libfontforge.so*
 
 %files python
 %{python_sitearch}/fontforge.so
 %{python_sitearch}/psMat.so
-
-%files -n %{libname}
-%{_libdir}/libfontforge.so.%{major}*
-
-%files -n %{libexe}
-%{_libdir}/libfontforgeexe.so.%{major}*
-
-%files -n %{libgdraw}
-%{_libdir}/libgdraw.so.%{gdraw_major}*
-
-%files -n %{libgunicode}
-%{_libdir}/libgunicode.so.%{gunicode_major}*
-
-%files -n %{libgutils}
-%{_libdir}/libgutils.so.%{major}*
-
-%files -n %{devname}
-%{_libdir}/lib*.so
-%{_libdir}/pkgconfig
-%{_includedir}/%{name}
