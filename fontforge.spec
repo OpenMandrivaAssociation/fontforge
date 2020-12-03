@@ -1,17 +1,15 @@
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
-Version:	20200314
+Version:	20201107
 Release:	1
 License:	BSD-like
 Group:		Publishing
 Url:		http://fontforge.sourceforge.net/
 # For current version, check https://github.com/fontforge/fontforge/releases
-Source0:	http://github.com/fontforge/fontforge/archive/%{version}.tar.gz
+Source0:	http://github.com/fontforge/fontforge/archive/%{version}/%{name}-%{version}.tar.gz
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
-# Fix build
-Patch0:		https://github.com/fontforge/fontforge/commit/43e6087ec9bdbb23b8bb61c07efe6490fab23d73.patch
 
 BuildRequires:	chrpath
 BuildRequires:	git
