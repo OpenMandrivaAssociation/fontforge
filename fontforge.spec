@@ -1,6 +1,6 @@
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
-Version:	20201107
+Version:	20220308
 Release:	1
 License:	BSD-like
 Group:		Publishing
@@ -116,7 +116,6 @@ chrpath -d %{buildroot}%{_bindir}/%{name} %{buildroot}%{_libdir}/*.so.*
 %{_datadir}/applications/*.desktop
 %{_datadir}/mime/packages/fontforge.xml
 %{_datadir}/metainfo/org.fontforge.FontForge.*.xml
-%{_datadir}/pixmaps/org.fontforge.FontForge.*
 %{_datadir}/%{name}
 %{_libdir}/libfontforge.so*
 
