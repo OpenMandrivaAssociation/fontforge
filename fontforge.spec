@@ -1,12 +1,12 @@
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
 Version:	20220308
-Release:	1
+Release:	2
 License:	BSD-like
 Group:		Publishing
-Url:		http://fontforge.sourceforge.net/
+Url:		https://fontforge.sourceforge.net/
 # For current version, check https://github.com/fontforge/fontforge/releases
-Source0:	http://github.com/fontforge/fontforge/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/fontforge/fontforge/archive/%{version}/%{name}-%{version}.tar.gz
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
@@ -60,6 +60,19 @@ postscript, truetype, opentype, cid-keyed, multi-master, cff, svg and
 bitmap (bdf) fonts, or edit existing ones. Also lets you convert one
 format to another. FontForge has support for many macintosh font formats.
 
+%files -f FontForge.lang
+%{_bindir}/*
+%{_mandir}/man1/*
+%{_iconsdir}/hicolor/*/apps/*.png
+%optional %{_iconsdir}/hicolor/*/apps/*.svg
+%{_datadir}/applications/*.desktop
+%{_datadir}/mime/packages/fontforge.xml
+%{_datadir}/metainfo/org.fontforge.FontForge.*.xml
+%{_datadir}/%{name}
+%{_libdir}/libfontforge.so*
+
+#---------------------------------------------------------------------------
+
 %package python
 Group:		Development/Python
 Summary:	Library bindings for python
@@ -70,9 +83,16 @@ BuildRequires:	python-devel
 This package contains the python library for python applications that
 use %{name}.
 
+%files python
+%{python_sitearch}/fontforge.so
+%{python_sitearch}/psMat.so
+
+#---------------------------------------------------------------------------
+
 %prep
 %autosetup -p1
 
+%build
 # FIXME switch to ENABLE_DOCS at some point, when
 # they actually compile with current sphinx
 %cmake -G Ninja \
@@ -85,8 +105,7 @@ use %{name}.
 	-DENABLE_WRITE_PFM:BOOL=ON \
 	-DENABLE_X11:BOOL=ON
 
-%build
-%ninja_build -C build
+%ninja_build #-C build
 
 %install
 %ninja_install -C build
@@ -108,17 +127,3 @@ chrpath -d %{buildroot}%{_bindir}/%{name} %{buildroot}%{_libdir}/*.so.*
 
 %find_lang FontForge
 
-%files -f FontForge.lang
-%{_bindir}/*
-%{_mandir}/man1/*
-%{_iconsdir}/hicolor/*/apps/*.png
-%optional %{_iconsdir}/hicolor/*/apps/*.svg
-%{_datadir}/applications/*.desktop
-%{_datadir}/mime/packages/fontforge.xml
-%{_datadir}/metainfo/org.fontforge.FontForge.*.xml
-%{_datadir}/%{name}
-%{_libdir}/libfontforge.so*
-
-%files python
-%{python_sitearch}/fontforge.so
-%{python_sitearch}/psMat.so
