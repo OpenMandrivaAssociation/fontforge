@@ -1,0 +1,10 @@
+--- a/doc/CMakeLists.txt
++++ b/doc/CMakeLists.txt
+@@ -27,6 +27,6 @@
+ 
+ add_custom_target(docs ALL DEPENDS sphinx-docs)
+ install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/sphinx-docs/"
+-  DESTINATION ${CMAKE_INSTALL_DOCDIR}
++  DESTINATION ${CMAKE_INSTALL_DOCDIR}/html
+   COMPONENT docs
+ )
