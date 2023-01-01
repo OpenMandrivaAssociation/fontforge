@@ -1,5 +1,3 @@
-# FIXME switch to ENABLE_DOCS at some point, when
-# they actually compile with current sphinx
 %bcond_without	doc
 %bcond_without	python
 
@@ -74,7 +72,7 @@ format to another. FontForge has support for many macintosh font formats.
 
 %files -f FontForge.lang
 %license LICENSE
-%doc AUTHORS CONTRIBUTING.md README.md
+%{?!with_doc:%doc AUTHORS CONTRIBUTING.md README.md}
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_iconsdir}/hicolor/*/apps/*.png
@@ -83,6 +81,7 @@ format to another. FontForge has support for many macintosh font formats.
 %{_datadir}/mime/packages/fontforge.xml
 %{_datadir}/metainfo/org.fontforge.FontForge.*.xml
 %{_datadir}/%{name}
+%{?with_doc:%{_docdir}/%{name}}
 %{_libdir}/libfontforge.so*
 
 #---------------------------------------------------------------------------
@@ -130,9 +129,9 @@ desktop-file-install \
 	desktop/org.fontforge.FontForge.desktop
 
 # icons
-install -m644 %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
-install -m644 %{SOURCE12} -D %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
-install -m644 %{SOURCE13} -D %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+install -m 0644 %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+install -m 0644 %{SOURCE12} -D %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+install -m 0644 %{SOURCE13} -D %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 mkdir -p %{buildroot}/%{_datadir}/mime/packages
 
@@ -140,9 +139,11 @@ install -p desktop/fontforge.xml %{buildroot}/%{_datadir}/mime/packages/
 
 chrpath -d %{buildroot}%{_bindir}/%{name} %{buildroot}%{_libdir}/*.so.*
 
-# docs: remove unwanted
+# docs
 %if %{with doc}
-rm -fr %{buildroot}%{name}/html/{.buildinfo,.nojekyll}
+#rm -fr /build/doc/sphinx-docs
+rm -fr %{buildroot}%{_docdir}/%{name}/html/{.buildinfo,.nojekyll}
+install -pm 0644 AUTHORS CONTRIBUTING.md README.md  -D %{buildroot}%{_docdir}/%{name}
 %endif
 
 # locales
