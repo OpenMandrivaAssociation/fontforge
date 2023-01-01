@@ -83,9 +83,6 @@ format to another. FontForge has support for many macintosh font formats.
 %{_datadir}/mime/packages/fontforge.xml
 %{_datadir}/metainfo/org.fontforge.FontForge.*.xml
 %{_datadir}/%{name}
-%if %{with doc}
-%{_docdir}/%{name}
-%endif
 %{_libdir}/libfontforge.so*
 
 #---------------------------------------------------------------------------
