@@ -4,7 +4,7 @@
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
 Version:	20230101
-Release:	3
+Release:	4
 License:	BSD-like
 Group:		Publishing
 Url:		https://fontforge.sourceforge.net/
