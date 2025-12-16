@@ -30,6 +30,8 @@ BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires:	pkgconfig(gtkmm-3.0)
 %if %{with python}
 BuildRequires:	pkgconfig(python3)
 %endif
