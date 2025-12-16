@@ -24,6 +24,7 @@ BuildRequires:	libtool-devel
 BuildRequires:	libuninameslist-devel
 BuildRequires:	tiff-devel
 BuildRequires:	uthash-devel
+BuildRequires:	gettext
 BuildRequires:	cmake ninja
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
