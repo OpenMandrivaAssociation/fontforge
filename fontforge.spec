@@ -3,8 +3,8 @@
 
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
-Version:	20230101
-Release:	4
+Version:	20251009
+Release:	1
 License:	BSD-like
 Group:		Publishing
 Url:		https://fontforge.sourceforge.net/
@@ -47,7 +47,7 @@ BuildRequires:	pkgconfig(libwoff2dec)
 BuildRequires:	pkgconfig(libspiro)
 # docs
 %if %{with doc}
-BuildRequires:	python3dist(sphinx)
+BuildRequires:	python%{pyver}dist(sphinx)
 %endif
 BuildRequires:	giflib-devel
 # The various libraries were never used by anything outside of fontforge itself,
