@@ -4,7 +4,7 @@
 Summary:	Font Editor for PostScript, TrueType, OpenType and various fonts
 Name:		fontforge
 Version:	20251009
-Release:	2
+Release:	3
 License:	BSD-like
 Group:		Publishing
 Url:		https://fontforge.sourceforge.net/
@@ -94,7 +94,6 @@ format to another. FontForge has support for many macintosh font formats.
 Group:		Development/Python
 Summary:	Library bindings for python
 Conflicts:	%{name} < 1.0-0.20110222.4
-BuildRequires:	python-devel
 
 %description python
 This package contains the python library for python applications that
